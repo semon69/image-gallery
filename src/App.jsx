@@ -19,7 +19,7 @@ function App() {
   const [allImages, setAllImages] = useState(images)
 
   const imageRef = useRef()
-  
+
   const [selectedImages, setSelectedImages] = useState([]);
 
   // The onImageChange function collect a single image in the form of URL that is selected and store it into existing array.
@@ -49,16 +49,39 @@ function App() {
   const deleteSelectedImages = () => {
     const updatedImages = allImages.filter((_, index) => !selectedImages.includes(index));
     setAllImages(updatedImages);
-    setSelectedImages([]); 
+    setSelectedImages([]);
+  };
+
+  const handleDragStart = (e, index) => {
+    e.dataTransfer.setData('text/plain', index.toString());
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = (e, newIndex) => {
+    e.preventDefault();
+    const draggedIndex = parseInt(e.dataTransfer.getData('text/plain'));
+    const updatedImages = [...allImages];
+    const [draggedImage] = updatedImages.splice(draggedIndex, 1);
+    updatedImages.splice(newIndex, 0, draggedImage);
+    setAllImages(updatedImages);
   };
 
   return (
 
     <>
-      <section className="max-w-7xl mx-auto my-10">
-        <h1 className="border-b-4 border-black pb-2 mb-5 text-4xl font-bold">Gallery</h1>
+      <section className="max-w-7xl mx-auto my-10 p-2">
+        <h1 className="border-b-4 border-black pb-3 mb-5 text-4xl font-bold">Gallery</h1>
         <div className="flex justify-between my-3">
-          <p className="text-xl font-bold">{selectedImages.length} Selected Photos</p>
+          {
+            selectedImages.length ?
+              <p className="text-xl font-bold"><input checked={true} className="w-5 h-5" type="checkbox" name="" id="" /> <span>{selectedImages.length}</span> Selected Photos</p>
+              :
+              ''
+          }
+
           {
             selectedImages.length > 0 ?
               <p onClick={deleteSelectedImages} className="text-xl font-bold text-red-500 cursor-pointer">Delete Files</p>
@@ -68,23 +91,32 @@ function App() {
         </div>
         <div>
           <div className="">
-            <div className="grid grid-cols-5 gap-5">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
               {
                 allImages.map((img, index) =>
                   <div
                     key={index}
                     onClick={() => toggleImageSelection(index)}
-                    className={`relative hover:brightness-50  hover:cursor-pointer  hover:bg-gray-400 ${index == 0 ? "col-span-2 row-span-2" : "col-span-1 row-span-1"}`}
+                    onDragStart={(e) => handleDragStart(e, index)}
+                    onDragOver={handleDragOver}
+                    onDrop={(e) => handleDrop(e, index)}
+                    draggable
+                    className={`relative hover:brightness-50  hover:bg-gray-400 ${index == 0 ? "col-span-2 row-span-2" : "col-span-1 row-span-1"}`}
                   >
                     <img
-                      className="border-2 border-gray-400 rounded-xl w-full h-full object-cover"
+                      className="border-2 border-gray-400 rounded-xl w-full h-full object-cover hover:cursor-pointer"
                       src={img} alt="" />
 
-                    <input
-                      checked={selectedImages.includes(index)}
-                      onChange={() => toggleImageSelection(index)}
-                      className="absolute w-5 h-5 top-3 left-3"
-                      type="checkbox" name="" id="" />
+                    {
+                      selectedImages.includes(index) &&
+                      <input
+                        checked={selectedImages.includes(index)}
+                        onChange={() => toggleImageSelection(index)}
+                        className="absolute w-5 h-5 top-3 left-3"
+                        type="checkbox" name="" id="" />
+                    }
+
+
                   </div>
 
                 )

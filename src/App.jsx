@@ -19,8 +19,10 @@ function App() {
   const [allImages, setAllImages] = useState(images)
 
   const imageRef = useRef()
+  
   const [selectedImages, setSelectedImages] = useState([]);
 
+  // The onImageChange function collect a single image in the form of URL that is selected and store it into existing array.
   const onImageChange = (event) => {
     event.preventDefault()
     if (event.target.files && event.target.files[0]) {
@@ -29,7 +31,7 @@ function App() {
       setAllImages([...allImages, newImg])
     }
   }
-
+  // The toggleImageSelection function carries all selected image in a state using their index.
   const toggleImageSelection = (index) => {
     const updatedSelectedImages = [...selectedImages];
     const currentIndex = updatedSelectedImages.indexOf(index);
@@ -42,8 +44,8 @@ function App() {
 
     setSelectedImages(updatedSelectedImages);
   };
-  console.log(selectedImages.length);
 
+  // The deleteSelectedImages function filters out the selected images from the allImages array and updates the state with the filtered array.
   const deleteSelectedImages = () => {
     const updatedImages = allImages.filter((_, index) => !selectedImages.includes(index));
     setAllImages(updatedImages);

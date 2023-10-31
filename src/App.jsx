@@ -15,9 +15,11 @@ import { useRef, useState } from "react"
 function App() {
 
   const images = [img11, img2, img3, img4, img5, img6, img7, img8, img9, img10, img1]
+
   const [allImages, setAllImages] = useState(images)
 
   const imageRef = useRef()
+  const [selectedImages, setSelectedImages] = useState([]);
 
   const onImageChange = (event) => {
     event.preventDefault()
@@ -28,11 +30,40 @@ function App() {
     }
   }
 
+  const toggleImageSelection = (index) => {
+    const updatedSelectedImages = [...selectedImages];
+    const currentIndex = updatedSelectedImages.indexOf(index);
+
+    if (currentIndex === -1) {
+      updatedSelectedImages.push(index);
+    } else {
+      updatedSelectedImages.splice(currentIndex, 1);
+    }
+
+    setSelectedImages(updatedSelectedImages);
+  };
+  console.log(selectedImages.length);
+
+  const deleteSelectedImages = () => {
+    const updatedImages = allImages.filter((_, index) => !selectedImages.includes(index));
+    setAllImages(updatedImages);
+    setSelectedImages([]); 
+  };
+
   return (
 
     <>
       <section className="max-w-7xl mx-auto my-10">
         <h1 className="border-b-4 border-black pb-2 mb-5 text-4xl font-bold">Gallery</h1>
+        <div className="flex justify-between my-3">
+          <p className="text-xl font-bold">{selectedImages.length} Selected Photos</p>
+          {
+            selectedImages.length > 0 ?
+              <p onClick={deleteSelectedImages} className="text-xl font-bold text-red-500 cursor-pointer">Delete Files</p>
+              :
+              ''
+          }
+        </div>
         <div>
           <div className="">
             <div className="grid grid-cols-5 gap-5">
@@ -40,13 +71,18 @@ function App() {
                 allImages.map((img, index) =>
                   <div
                     key={index}
+                    onClick={() => toggleImageSelection(index)}
                     className={`relative hover:brightness-50  hover:cursor-pointer  hover:bg-gray-400 ${index == 0 ? "col-span-2 row-span-2" : "col-span-1 row-span-1"}`}
                   >
                     <img
                       className="border-2 border-gray-400 rounded-xl w-full h-full object-cover"
                       src={img} alt="" />
 
-                    <input className="absolute w-5 h-5 top-3 left-3" type="checkbox" name="" id="" />
+                    <input
+                      checked={selectedImages.includes(index)}
+                      onChange={() => toggleImageSelection(index)}
+                      className="absolute w-5 h-5 top-3 left-3"
+                      type="checkbox" name="" id="" />
                   </div>
 
                 )

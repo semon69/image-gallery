@@ -80,8 +80,8 @@ function App() {
   return (
 
     <>
-      <section className="max-w-7xl mx-auto my-10 bg-zinc-50 p-5 shadow-2xl rounded">
-        <h1 className="border-b-4 border-black pb-3 mb-5 text-4xl font-bold">Gallery</h1>
+      <section className="p-5 mx-auto my-10 rounded shadow-2xl max-w-7xl bg-zinc-50">
+        <h1 className="pb-3 mb-5 text-4xl font-bold border-b-4 border-black">Gallery</h1>
 
         {/* Show number of selected images and give an option to delete them */}
         <div className="flex justify-between my-3">
@@ -102,7 +102,7 @@ function App() {
 
         <div>
           <div className="">
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
+            <div className="grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-5">
               {
                 allImages.map((img, index) =>
 
@@ -119,7 +119,7 @@ function App() {
                     {/* Implement a design for showing selected image */}
                     {
                       selectedImages.includes(index) &&
-                      <div className="absolute w-full h-full opacity-50 bg-blue-300 inset-0 rounded-xl"> </div>
+                      <div className="absolute inset-0 w-full h-full bg-blue-300 opacity-50 rounded-xl"> </div>
                     }
 
                     {/* Show images but for the first image, fixed width and height is now working */}
@@ -146,9 +146,9 @@ function App() {
               <div
                 data-aos="fade-up"
                 onClick={() => imageRef.current.click()}
-                className="image border-2 border-gray-400 rounded-xl flex flex-col justify-center items-center  hover:cursor-pointer">
+                className="flex flex-col items-center justify-center border-2 border-gray-400 rounded-xl uploadBox hover:cursor-pointer">
                 <FcGallery className="text-4xl" />
-                <p className="font-bold text-xl">Upload Image</p>
+                <p className="text-xl font-bold">Upload Image</p>
               </div>
             </div>
 

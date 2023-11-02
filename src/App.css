@@ -3,7 +3,24 @@
     height: 238px;
 }
 
+.uploadBox {
+    width: 238px;
+    height: 238px;
+}
+
 .showCheckbox:hover .overlay {
     display: block;
     z-index: 100;
+}
+
+@media (max-width: 768px) {
+    .image {
+        width: 190px;
+        height: 190px;
+    }
+
+    .uploadBox {
+        width: 170px;
+        height: 190px;
+    }
 }

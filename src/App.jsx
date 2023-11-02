@@ -53,14 +53,17 @@ function App() {
     setSelectedImages([]);
   };
 
+  // Start dragging image and store the index of the image that is being dragged
   const handleDragStart = (e, index) => {
     e.dataTransfer.setData('text/plain', index.toString());
   };
 
+  // This function is triggered when a draggable element is being dragged over a valid drop target. This function is defined to call e.preventDefault() to allow the image to be dropped.
   const handleDragOver = (e) => {
     e.preventDefault();
   };
 
+  // This function is triggered when a draggable element is dropped on a drop target. Set orders of images after drag and drop
   const handleDrop = (e, newIndex) => {
     e.preventDefault();
     const draggedIndex = parseInt(e.dataTransfer.getData('text/plain'));
@@ -73,8 +76,9 @@ function App() {
   return (
 
     <>
-      <section className="max-w-7xl mx-auto my-10 p-2">
+      <section className="max-w-7xl mx-auto my-10 bg-zinc-50 p-5 shadow-2xl rounded">
         <h1 className="border-b-4 border-black pb-3 mb-5 text-4xl font-bold">Gallery</h1>
+        {/* Show number of selected images and give an option to delete them */}
         <div className="flex justify-between my-3">
           {
             selectedImages.length ?
@@ -105,14 +109,18 @@ function App() {
                     draggable
                     className={`relative showCheckbox ${index == 0 ? "col-span-2 row-span-2" : "col-span-1 row-span-1"}`}
                   >
+                    {/* Implement a design for showing selected image */}
                     {
                       selectedImages.includes(index) &&
                       <div className="absolute w-full h-full opacity-50 bg-blue-300 inset-0 rounded-xl"> </div>
                     }
+
+                    {/* Show images but for the first image, fixed width and height is now working */}
                     <img
                       className={`${index == 0 ? "" : "image"}  border-2 border-gray-400 rounded-xl w-full h-full object-cover hover:brightness-50 hover:bg-gray-300 hover:cursor-pointer transition-all`}
                       src={img} alt="" />
 
+                    {/* Implement checkbox with multiple condition */}
                     <input
                       checked={selectedImages.includes(index)}
                       onChange={() => toggleImageSelection(index)}
@@ -126,6 +134,7 @@ function App() {
 
                 )
               }
+              {/* Image upload box that collect image using useRef */}
               <div
                 onClick={() => imageRef.current.click()}
                 className="image border-2 border-gray-400 rounded-xl flex flex-col justify-center items-center  hover:cursor-pointer">
@@ -133,6 +142,7 @@ function App() {
                 <p className="font-bold text-xl">Upload Image</p>
               </div>
             </div>
+            {/* Image upload input file but it is hidden and value passes through useRef */}
             <div className='hidden'>
               <input type="file" name="myImage" id="" ref={imageRef} onChange={onImageChange} />
             </div>

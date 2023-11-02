@@ -1,0 +1,9 @@
+.image {
+    width: 238px;
+    height: 238px;
+}
+
+.showCheckbox:hover .overlay {
+    display: block;
+    z-index: 100;
+}

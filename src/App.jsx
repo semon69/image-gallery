@@ -10,6 +10,7 @@ import img9 from "/images/image-9.webp"
 import img10 from "/images/image-10.jpeg"
 import img11 from "/images/image-11.jpeg"
 import { FcGallery } from 'react-icons/fc';
+import "./App.css"
 import { useRef, useState } from "react"
 
 function App() {
@@ -94,6 +95,7 @@ function App() {
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
               {
                 allImages.map((img, index) =>
+
                   <div
                     key={index}
                     onClick={() => toggleImageSelection(index)}
@@ -101,20 +103,23 @@ function App() {
                     onDragOver={handleDragOver}
                     onDrop={(e) => handleDrop(e, index)}
                     draggable
-                    className={`relative hover:brightness-50  hover:bg-gray-400 ${index == 0 ? "col-span-2 row-span-2" : "col-span-1 row-span-1"}`}
+                    className={`relative showCheckbox ${index == 0 ? "col-span-2 row-span-2" : "col-span-1 row-span-1"}`}
                   >
-                    <img
-                      className="border-2 border-gray-400 rounded-xl w-full h-full object-cover hover:cursor-pointer"
-                      src={img} alt="" />
-
                     {
                       selectedImages.includes(index) &&
-                      <input
-                        checked={selectedImages.includes(index)}
-                        onChange={() => toggleImageSelection(index)}
-                        className="absolute w-5 h-5 top-3 left-3"
-                        type="checkbox" name="" id="" />
+                      <div className="absolute w-full h-full opacity-50 bg-blue-300 inset-0 rounded-xl"> </div>
                     }
+                    <img
+                      className={`${index == 0 ? "" : "image"}  border-2 border-gray-400 rounded-xl w-full h-full object-cover hover:brightness-50 hover:bg-gray-300 hover:cursor-pointer transition-all`}
+                      src={img} alt="" />
+
+                    <input
+                      checked={selectedImages.includes(index)}
+                      onChange={() => toggleImageSelection(index)}
+                      className={`overlay absolute top-3 left-3 w-5 h-5 ${selectedImages.includes(index) ? "block" : 'hidden'}`}
+                      type="checkbox" name="" id="" />
+
+
 
 
                   </div>
@@ -123,7 +128,7 @@ function App() {
               }
               <div
                 onClick={() => imageRef.current.click()}
-                className="border-2 border-gray-400 rounded-xl flex flex-col justify-center items-center  hover:cursor-pointer">
+                className="image border-2 border-gray-400 rounded-xl flex flex-col justify-center items-center  hover:cursor-pointer">
                 <FcGallery className="text-4xl" />
                 <p className="font-bold text-xl">Upload Image</p>
               </div>

@@ -12,6 +12,10 @@ import img11 from "/images/image-11.jpeg"
 import { FcGallery } from 'react-icons/fc';
 import "./App.css"
 import { useRef, useState } from "react"
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+// ..
+AOS.init();
 
 function App() {
 
@@ -78,6 +82,7 @@ function App() {
     <>
       <section className="max-w-7xl mx-auto my-10 bg-zinc-50 p-5 shadow-2xl rounded">
         <h1 className="border-b-4 border-black pb-3 mb-5 text-4xl font-bold">Gallery</h1>
+
         {/* Show number of selected images and give an option to delete them */}
         <div className="flex justify-between my-3">
           {
@@ -94,6 +99,7 @@ function App() {
               ''
           }
         </div>
+
         <div>
           <div className="">
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
@@ -108,6 +114,7 @@ function App() {
                     onDrop={(e) => handleDrop(e, index)}
                     draggable
                     className={`relative showCheckbox ${index == 0 ? "col-span-2 row-span-2" : "col-span-1 row-span-1"}`}
+                    data-aos="fade-up"
                   >
                     {/* Implement a design for showing selected image */}
                     {
@@ -134,18 +141,22 @@ function App() {
 
                 )
               }
+
               {/* Image upload box that collect image using useRef */}
               <div
+                data-aos="fade-up"
                 onClick={() => imageRef.current.click()}
                 className="image border-2 border-gray-400 rounded-xl flex flex-col justify-center items-center  hover:cursor-pointer">
                 <FcGallery className="text-4xl" />
                 <p className="font-bold text-xl">Upload Image</p>
               </div>
             </div>
+
             {/* Image upload input file but it is hidden and value passes through useRef */}
             <div className='hidden'>
               <input type="file" name="myImage" id="" ref={imageRef} onChange={onImageChange} />
             </div>
+
           </div>
         </div>
       </section>

@@ -1,8 +1,9 @@
-# React + Vite
+## Gallery
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Live Link: 
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# Features:
+1. The gallery display images with one feature image larger than the others.
+2. Reordering functionality to allow users to rearrange the order of images in the gallery.
+3. Drag-and-drop functionality for reordering
+4. Allow users to select multiple images and delete them.

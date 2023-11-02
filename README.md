@@ -1,6 +1,6 @@
 ## Gallery
 
-# Live Link: 
+# Live Link: https://gleaming-fairy-a98102.netlify.app/
 
 # Features:
 1. The gallery display images with one feature image larger than the others.
